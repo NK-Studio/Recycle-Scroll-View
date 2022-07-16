@@ -1,0 +1,402 @@
+[
+  {
+    "Name": "NK-1",
+    "Level": 1
+  },
+  {
+    "Name": "NK-2",
+    "Level": 2
+  },
+  {
+    "Name": "NK-3",
+    "Level": 3
+  },
+  {
+    "Name": "NK-4",
+    "Level": 4
+  },
+  {
+    "Name": "NK-5",
+    "Level": 5
+  },
+  {
+    "Name": "NK-6",
+    "Level": 6
+  },
+  {
+    "Name": "NK-7",
+    "Level": 7
+  },
+  {
+    "Name": "NK-8",
+    "Level": 8
+  },
+  {
+    "Name": "NK-9",
+    "Level": 9
+  },
+  {
+    "Name": "NK-10",
+    "Level": 10
+  },
+  {
+    "Name": "NK-11",
+    "Level": 11
+  },
+  {
+    "Name": "NK-12",
+    "Level": 12
+  },
+  {
+    "Name": "NK-13",
+    "Level": 13
+  },
+  {
+    "Name": "NK-14",
+    "Level": 14
+  },
+  {
+    "Name": "NK-15",
+    "Level": 15
+  },
+  {
+    "Name": "NK-16",
+    "Level": 16
+  },
+  {
+    "Name": "NK-17",
+    "Level": 17
+  },
+  {
+    "Name": "NK-18",
+    "Level": 18
+  },
+  {
+    "Name": "NK-19",
+    "Level": 19
+  },
+  {
+    "Name": "NK-20",
+    "Level": 20
+  },
+  {
+    "Name": "NK-21",
+    "Level": 21
+  },
+  {
+    "Name": "NK-22",
+    "Level": 22
+  },
+  {
+    "Name": "NK-23",
+    "Level": 23
+  },
+  {
+    "Name": "NK-24",
+    "Level": 24
+  },
+  {
+    "Name": "NK-25",
+    "Level": 25
+  },
+  {
+    "Name": "NK-26",
+    "Level": 26
+  },
+  {
+    "Name": "NK-27",
+    "Level": 27
+  },
+  {
+    "Name": "NK-28",
+    "Level": 28
+  },
+  {
+    "Name": "NK-29",
+    "Level": 29
+  },
+  {
+    "Name": "NK-30",
+    "Level": 30
+  },
+  {
+    "Name": "NK-31",
+    "Level": 31
+  },
+  {
+    "Name": "NK-32",
+    "Level": 32
+  },
+  {
+    "Name": "NK-33",
+    "Level": 33
+  },
+  {
+    "Name": "NK-34",
+    "Level": 34
+  },
+  {
+    "Name": "NK-35",
+    "Level": 35
+  },
+  {
+    "Name": "NK-36",
+    "Level": 36
+  },
+  {
+    "Name": "NK-37",
+    "Level": 37
+  },
+  {
+    "Name": "NK-38",
+    "Level": 38
+  },
+  {
+    "Name": "NK-39",
+    "Level": 39
+  },
+  {
+    "Name": "NK-40",
+    "Level": 40
+  },
+  {
+    "Name": "NK-41",
+    "Level": 41
+  },
+  {
+    "Name": "NK-42",
+    "Level": 42
+  },
+  {
+    "Name": "NK-43",
+    "Level": 43
+  },
+  {
+    "Name": "NK-44",
+    "Level": 44
+  },
+  {
+    "Name": "NK-45",
+    "Level": 45
+  },
+  {
+    "Name": "NK-46",
+    "Level": 46
+  },
+  {
+    "Name": "NK-47",
+    "Level": 47
+  },
+  {
+    "Name": "NK-48",
+    "Level": 48
+  },
+  {
+    "Name": "NK-49",
+    "Level": 49
+  },
+  {
+    "Name": "NK-50",
+    "Level": 50
+  },
+  {
+    "Name": "NK-51",
+    "Level": 51
+  },
+  {
+    "Name": "NK-52",
+    "Level": 52
+  },
+  {
+    "Name": "NK-53",
+    "Level": 53
+  },
+  {
+    "Name": "NK-54",
+    "Level": 54
+  },
+  {
+    "Name": "NK-55",
+    "Level": 55
+  },
+  {
+    "Name": "NK-56",
+    "Level": 56
+  },
+  {
+    "Name": "NK-57",
+    "Level": 57
+  },
+  {
+    "Name": "NK-58",
+    "Level": 58
+  },
+  {
+    "Name": "NK-59",
+    "Level": 59
+  },
+  {
+    "Name": "NK-60",
+    "Level": 60
+  },
+  {
+    "Name": "NK-61",
+    "Level": 61
+  },
+  {
+    "Name": "NK-62",
+    "Level": 62
+  },
+  {
+    "Name": "NK-63",
+    "Level": 63
+  },
+  {
+    "Name": "NK-64",
+    "Level": 64
+  },
+  {
+    "Name": "NK-65",
+    "Level": 65
+  },
+  {
+    "Name": "NK-66",
+    "Level": 66
+  },
+  {
+    "Name": "NK-67",
+    "Level": 67
+  },
+  {
+    "Name": "NK-68",
+    "Level": 68
+  },
+  {
+    "Name": "NK-69",
+    "Level": 69
+  },
+  {
+    "Name": "NK-70",
+    "Level": 70
+  },
+  {
+    "Name": "NK-71",
+    "Level": 71
+  },
+  {
+    "Name": "NK-72",
+    "Level": 72
+  },
+  {
+    "Name": "NK-73",
+    "Level": 73
+  },
+  {
+    "Name": "NK-74",
+    "Level": 74
+  },
+  {
+    "Name": "NK-75",
+    "Level": 75
+  },
+  {
+    "Name": "NK-76",
+    "Level": 76
+  },
+  {
+    "Name": "NK-77",
+    "Level": 77
+  },
+  {
+    "Name": "NK-78",
+    "Level": 78
+  },
+  {
+    "Name": "NK-79",
+    "Level": 79
+  },
+  {
+    "Name": "NK-80",
+    "Level": 80
+  },
+  {
+    "Name": "NK-81",
+    "Level": 81
+  },
+  {
+    "Name": "NK-82",
+    "Level": 82
+  },
+  {
+    "Name": "NK-83",
+    "Level": 83
+  },
+  {
+    "Name": "NK-84",
+    "Level": 84
+  },
+  {
+    "Name": "NK-85",
+    "Level": 85
+  },
+  {
+    "Name": "NK-86",
+    "Level": 86
+  },
+  {
+    "Name": "NK-87",
+    "Level": 87
+  },
+  {
+    "Name": "NK-88",
+    "Level": 88
+  },
+  {
+    "Name": "NK-89",
+    "Level": 89
+  },
+  {
+    "Name": "NK-90",
+    "Level": 90
+  },
+  {
+    "Name": "NK-91",
+    "Level": 91
+  },
+  {
+    "Name": "NK-92",
+    "Level": 92
+  },
+  {
+    "Name": "NK-93",
+    "Level": 93
+  },
+  {
+    "Name": "NK-94",
+    "Level": 94
+  },
+  {
+    "Name": "NK-95",
+    "Level": 95
+  },
+  {
+    "Name": "NK-96",
+    "Level": 96
+  },
+  {
+    "Name": "NK-97",
+    "Level": 97
+  },
+  {
+    "Name": "NK-98",
+    "Level": 98
+  },
+  {
+    "Name": "NK-99",
+    "Level": 99
+  },
+  {
+    "Name": "NK-100",
+    "Level": 100
+  }
+]
