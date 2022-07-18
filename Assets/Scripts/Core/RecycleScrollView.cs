@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(ScrollRect))]
-public class RecycleScrollView : MonoBehaviour
+public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 {
     //아이템 프리팹
     private GameObject _originItem;
@@ -22,7 +23,10 @@ public class RecycleScrollView : MonoBehaviour
     //아이템 개수
     private int _count;
 
-    private List<GameObject> _itemList;
+    //아이템 뷰 컴포넌트 수록
+    private List<T> _itemList;
+
+    public UnityAction<T, int> RenderView;
 
     private void InitItemHeightSize()
     {
@@ -46,22 +50,23 @@ public class RecycleScrollView : MonoBehaviour
     {
         Assert.IsNotNull(_scrollView, "_scrollView != null");
         float x = _scrollView.content.sizeDelta.x;
-        float y = _count * _itemHeight;
+        float y = _count * (_itemHeight + _spacing);
         _scrollView.content.sizeDelta = new Vector2(x, y);
     }
 
-    private void CreateItem()
+    private void CreateItem(UnityAction<T, int> renderView)
     {
         Assert.IsNotNull(_originItem, "originItem이 비어 있습니다.");
 
         //height가 만약 1000이고 itemHeight : 150 + spacing : 30에 위 아래 보조 3개  
         int itemCount = (int)(_scrollView.viewport.rect.height / (_itemHeight + _spacing)) + 3;
-        _itemList = new List<GameObject>();
+        _itemList = new List<T>();
         //필요한 개수에 맞춰서 생성
         for (int i = 0; i < itemCount; i++)
         {
             //오브젝트 생성
             GameObject item = Instantiate(_originItem, _scrollView.content);
+            T view = item.GetComponent<T>();
 
             //간격
             float y = -i * (_itemHeight + _spacing);
@@ -70,38 +75,31 @@ public class RecycleScrollView : MonoBehaviour
             item.transform.localPosition = new Vector3(0, y, 0);
 
             //게임 오브젝트 적용
-            _itemList.Add(item);
+            _itemList.Add(view);
+            renderView?.Invoke(view, i);
         }
     }
 
-    private void RefreshPositionItem(Transform item)
+    private bool RefreshPositionItem(Transform item, float contentPosY,float contentPosUpY, float contentPosBottomY)
     {
-        //스크롤 했을 때 컨텐츠 오브젝트 Y를 반환합니다.
-        float contentPosY = _scrollView.content.anchoredPosition.y;
-
         //아이템 앵커포인트 기반 Y포지션을 계산한다.
         float itemPosY = item.localPosition.y + contentPosY;
-
-        //이 값을 넘어가면 스크롤 뷰 rectMaxY를 넘어간 것이다.
-        float itemHeightSpacing = _itemHeight + _spacing;
-
-        //컨텐츠 Rect상단에 아이템 2개 정도 높이
-        float contentPosUpY = itemHeightSpacing * 2;
-        
-        //컨텐츠 Rect하단에 아이템 1개 정도 밑 높이
-        float contentPosBottomY = -(_scrollView.viewport.rect.height + itemHeightSpacing);
 
         //아이템이 컨텐츠 영역 상단으로 넘어갔을 때,
         bool isUpLine = itemPosY > contentPosUpY;
 
         //아이템이 컨텐츠 영역 하단으로 넘어갔을 때,
         bool isDownLine = itemPosY < contentPosBottomY;
-
+        
         if (isUpLine)
         {
             Vector3 itemPos = item.localPosition;
             itemPos.y -= _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
+
+            RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
+
+            return true;
         }
 
         if (isDownLine)
@@ -109,29 +107,65 @@ public class RecycleScrollView : MonoBehaviour
             Vector3 itemPos = item.localPosition;
             itemPos.y += _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
+
+            RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
+
+            return true;
         }
+
+        return false;
     }
 
     private void Update()
     {
-        foreach (GameObject item in _itemList)
+        //스크롤 했을 때 컨텐츠 오브젝트 Y를 반환합니다.
+        float contentPosY = _scrollView.content.anchoredPosition.y;
+
+        //이 값을 넘어가면 스크롤 뷰 rectMaxY를 넘어간 것이다.
+        float itemHeightSpacing = _itemHeight + _spacing;
+
+        //컨텐츠 Rect상단에 아이템 2개 정도 높이
+        float contentPosUpY = itemHeightSpacing * 2;
+
+        //컨텐츠 Rect하단에 아이템 1개 정도 밑 높이
+        float contentPosBottomY = -(_scrollView.viewport.rect.height + itemHeightSpacing);
+        
+        foreach (T item in _itemList)
         {
-            RefreshPositionItem(item.transform);
+            bool isChange = RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
+
+            if (isChange)
+            {
+                int index = (int)(-item.transform.localPosition.y / (_itemHeight + _spacing));
+
+                //데이터 표시 영역 밖이면 안보이게 한다.
+                if (index < 0 || index >= _count)
+                {
+                    item.gameObject.SetActive(false);
+                    return;
+                }
+
+                item.gameObject.SetActive(true);
+                RenderView.Invoke(item, index);
+            }
         }
     }
 
-    public void Init(int count, GameObject itemPrefab, float spacing = 0f)
+    public void Init(int count, GameObject itemPrefab, UnityAction<T, int> renderView, float
+        spacing = 0f)
+
     {
         _scrollView = GetComponent<ScrollRect>();
 
         _count = count;
         _originItem = itemPrefab;
         _spacing = spacing;
+        RenderView = renderView;
 
         InitItemHeightSize();
 
         InitContentHeight();
 
-        CreateItem();
+        CreateItem(renderView);
     }
 }
