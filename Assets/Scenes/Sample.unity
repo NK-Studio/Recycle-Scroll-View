@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 3
   m_Viewport: {fileID: 1884864518}
   m_HorizontalScrollbar: {fileID: 1740247108}
   m_VerticalScrollbar: {fileID: 2100312330}
@@ -385,6 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2e89c9cdc97d54d98e3641c3b47324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spacing: 30
+  prefab: {fileID: 6182537165561236888, guid: 61925a4a4e99004479415255739c736d, type: 3}
+  dataJson: {fileID: 4900000, guid: 28f7c09583b250e46aaea9f1aa3fe744, type: 3}
 --- !u!1 &230368621
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000041484833}
+  m_AnchoredPosition: {x: 0, y: 0.00097277516}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &463246561
@@ -568,54 +571,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463246561}
   m_CullTransparentMesh: 1
---- !u!1 &542127131
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 542127132}
-  - component: {fileID: 542127133}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &542127132
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542127131}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &542127133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542127131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d28ea0817390a1040a032476ae4d9043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recycleScrollView: {fileID: 219926026}
-  spacing: 30
-  prefab: {fileID: 617838413660890843, guid: 61925a4a4e99004479415255739c736d, type: 3}
-  dataJson: {fileID: 4900000, guid: 28f7c09583b250e46aaea9f1aa3fe744, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,7 +1223,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2081465997}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999977
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
