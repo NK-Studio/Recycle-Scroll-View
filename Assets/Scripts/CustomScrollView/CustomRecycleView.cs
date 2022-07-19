@@ -1,9 +1,9 @@
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CustomRecycleView : RecycleScrollView<customItemView>
 {
-    [Range(0, 100), Tooltip("간격 (Bake Only)")] public float spacing;
     public customItemView prefab;
     public TextAsset dataJson;
     
@@ -13,18 +13,17 @@ public class CustomRecycleView : RecycleScrollView<customItemView>
     {
         Item[] data = JsonConvert.DeserializeObject<Item[]>(dataJson.text);
 
-        if (data is null)
-            return;
-
+        Assert.IsNotNull(data,"data == null");
+        
         _recycleScrollView = GetComponent<RecycleScrollView<customItemView>>();
         _recycleScrollView.Init(data.Length, prefab, (arg0, i) =>
         {
             //어떻게 렌더링 할 것인가?
             arg0.SetItem(data[i]);
-
+            
             //아이템 뷰를 다시 그립니다.
             arg0.RefreshView();
-        }, spacing);
+        });
         
     }
 }

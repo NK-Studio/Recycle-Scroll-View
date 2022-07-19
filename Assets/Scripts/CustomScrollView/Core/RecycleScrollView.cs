@@ -12,10 +12,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     //스크롤 뷰
     private ScrollRect _scrollView;
-
-    //간격
-    private float _spacing;
-
+    
     //아이템 높이
     private float _itemHeight;
 
@@ -27,16 +24,19 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     private UnityAction<T, int> _renderView;
 
+    //간격
+    [Range(0, 100), Tooltip("간격 (Bake Only)")] public float spacing;
+    
     private void InitItemHeightSize()
     {
         //아이템 사이즈를 가져온다.
-        Assert.IsNotNull(_originItem, "originItem != null");
+        Assert.IsNotNull(_originItem, "originItem == null");
 
         //아이템 렉트 컴포넌트를 가져온다.
         RectTransform itemRectTransform = _originItem.GetComponent<RectTransform>();
 
         //에러 메세지 표시
-        Assert.IsNotNull(itemRectTransform, "itemRectTransform != null");
+        Assert.IsNotNull(itemRectTransform, "itemRectTransform == null");
 
         //렉트 정보를 가져옵니다.
         Rect itemRect = itemRectTransform.rect;
@@ -47,18 +47,18 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     private void InitContentHeight()
     {
-        Assert.IsNotNull(_scrollView, "_scrollView != null");
+        Assert.IsNotNull(_scrollView, "_scrollView == null");
         float x = _scrollView.content.sizeDelta.x;
-        float y = _count * (_itemHeight + _spacing) - _spacing;
+        float y = _count * (_itemHeight + spacing) - spacing;
         _scrollView.content.sizeDelta = new Vector2(x, y);
     }
 
     private void CreateItem(UnityAction<T, int> renderView)
     {
-        Assert.IsNotNull(_originItem, "originItem이 비어 있습니다.");
+        Assert.IsNotNull(_originItem,"_originItem == null");
 
         //height가 만약 1000이고 itemHeight : 150 + spacing : 30에 위 아래 보조 3개  
-        int itemCount = (int)(_scrollView.viewport.rect.height / (_itemHeight + _spacing)) + 3;
+        int itemCount = (int)(_scrollView.viewport.rect.height / (_itemHeight + spacing)) + 3;
         _itemList = new List<T>();
         //필요한 개수에 맞춰서 생성
         for (int i = 0; i < itemCount; i++)
@@ -68,7 +68,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
             T view = item.GetComponent<T>();
 
             //간격
-            float y = -i * (_itemHeight + _spacing);
+            float y = -i * (_itemHeight + spacing);
 
             //간격 적용
             item.transform.localPosition = new Vector3(0, y, 0);
@@ -93,7 +93,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         if (isUpLine)
         {
             Vector3 itemPos = item.localPosition;
-            itemPos.y -= _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
+            itemPos.y -= _itemList.Count * (_itemHeight + spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
 
             RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
@@ -104,7 +104,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         if (isDownLine)
         {
             Vector3 itemPos = item.localPosition;
-            itemPos.y += _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
+            itemPos.y += _itemList.Count * (_itemHeight + spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
 
             RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
@@ -117,11 +117,13 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Update()
     {
+        Assert.IsNotNull(_scrollView,"Init이 처리되지 않았습니다.");
+        
         //스크롤 했을 때 컨텐츠 오브젝트 Y를 반환합니다.
         float contentPosY = _scrollView.content.anchoredPosition.y;
 
         //이 값을 넘어가면 스크롤 뷰 rectMaxY를 넘어간 것이다.
-        float itemHeightSpacing = _itemHeight + _spacing;
+        float itemHeightSpacing = _itemHeight + spacing;
 
         //컨텐츠 Rect상단에 아이템 2개 정도 높이
         float contentPosUpY = itemHeightSpacing * 2;
@@ -135,7 +137,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
             if (isChange)
             {
-                int index = (int)(-item.transform.localPosition.y / (_itemHeight + _spacing));
+                int index = (int)(-item.transform.localPosition.y / (_itemHeight + spacing));
 
                 //데이터 표시 영역 밖이면 안보이게 한다.
                 if (index < 0 || index >= _count)
@@ -150,15 +152,13 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    public void Init(int count, T itemPrefab, UnityAction<T, int> renderView, float
-        spacing = 0f)
+    public void Init(int count, T itemPrefab, UnityAction<T, int> renderView)
 
     {
         _scrollView = GetComponent<ScrollRect>();
 
         _count = count;
         _originItem = itemPrefab.gameObject;
-        _spacing = spacing;
         _renderView = renderView;
 
         InitItemHeightSize();
