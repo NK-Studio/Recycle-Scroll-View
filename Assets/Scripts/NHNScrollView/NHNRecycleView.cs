@@ -1,6 +1,8 @@
+using System;
 using Gpm.Ui;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class NHNRecycleView : MonoBehaviour
 {
@@ -23,7 +25,24 @@ public class NHNRecycleView : MonoBehaviour
     {
         NHNItem[] data = JsonConvert.DeserializeObject<NHNItem[]>(dataJson.text);
 
-        foreach (NHNItem nhnItemData in data) 
+        Assert.IsNotNull(data, "data == null");
+
+        foreach (NHNItem nhnItemData in data)
             infinity.InsertData(nhnItemData);
+    }
+
+    public void MoveToIndex(int index)
+    {
+        infinity.MoveTo(index, InfiniteScroll.MoveToType.MOVE_TO_CENTER);
+    }
+
+    public void ClearItem()
+    {
+        infinity.Clear();
+    }
+
+    public void RemoveFirst()
+    {
+        infinity.RemoveData(0);
     }
 }

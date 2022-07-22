@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 617838413660890840}
   - component: {fileID: 617838413660890822}
   - component: {fileID: 617838413660890841}
-  - component: {fileID: 6182537165561236888}
+  - component: {fileID: 7421076739004353201}
   m_Layer: 5
-  m_Name: CustomItem
+  m_Name: NormalItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6182537165561236888
+--- !u!114 &7421076739004353201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 617838413660890843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b60ac0bd5051fa468e37c5951874623, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cd067bbbedf88a47a9d2ad10d0e54f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 617838415378606504}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 617838413787402224}
   - component: {fileID: 617838413787402227}
   m_Layer: 5
-  m_Name: Profile Image
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 617838415378606505}
   - component: {fileID: 617838415378606504}
   m_Layer: 5
-  m_Name: Name Text
+  m_Name: User Tittle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 617838415613077168}
   - component: {fileID: 617838415613077171}
   m_Layer: 5
-  m_Name: Send Button
+  m_Name: Send Hearts BTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -533,8 +533,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6182537165561236888}
-        m_TargetAssemblyTypeName: customItemView, Assembly-CSharp
+      - m_Target: {fileID: 7421076739004353201}
+        m_TargetAssemblyTypeName: NormalItemView, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
