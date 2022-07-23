@@ -2,12 +2,12 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class CustomRecycleView : RecycleScrollView<customItemView>
+public class CustomRecycleView : RecycleScrollView<CustomItemView>
 {
-    public customItemView prefab;
+    public CustomItemView prefab;
     public TextAsset dataJson;
     
-    private RecycleScrollView<customItemView> _recycleScrollView;
+    private RecycleScrollView<CustomItemView> _recycleScrollView;
     
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class CustomRecycleView : RecycleScrollView<customItemView>
 
         Assert.IsNotNull(data,"data == null");
         
-        _recycleScrollView = GetComponent<RecycleScrollView<customItemView>>();
+        _recycleScrollView = GetComponent<RecycleScrollView<CustomItemView>>();
         _recycleScrollView.Init(data.Length, prefab, (arg0, i) =>
         {
             //어떻게 렌더링 할 것인가?

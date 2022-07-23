@@ -385,8 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2e89c9cdc97d54d98e3641c3b47324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 30
-  prefab: {fileID: 6182537165561236888, guid: 61925a4a4e99004479415255739c736d, type: 3}
+  prefab: {fileID: 4052455322454924878, guid: 61925a4a4e99004479415255739c736d, type: 3}
   dataJson: {fileID: 4900000, guid: 28f7c09583b250e46aaea9f1aa3fe744, type: 3}
 --- !u!1 &230368621
 GameObject:
@@ -488,8 +487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000059393926}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &463246561
 GameObject:
@@ -1223,7 +1222,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2081465997}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.999975
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

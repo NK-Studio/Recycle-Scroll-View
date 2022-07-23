@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine.Assertions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     //스크롤 뷰
     private ScrollRect _scrollView;
-    
+
     //아이템 높이
     private float _itemHeight;
 
@@ -22,44 +23,56 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
     //아이템 뷰 컴포넌트 수록
     private List<T> _itemList;
 
+    //어떻게 그릴건지 처리합니다.
     private UnityAction<T, int> _renderView;
 
     //간격
-    [Range(0, 100), Tooltip("간격 (Bake Only)")] public float spacing;
-    
+    private float _spacing;
+
     private void InitItemHeightSize()
     {
-        //아이템 사이즈를 가져온다.
+        //_originItem이 비어있으면 에러 표시
         Assert.IsNotNull(_originItem, "originItem == null");
 
-        //아이템 렉트 컴포넌트를 가져온다.
+        //아이템 뷰 오브젝트의 Rect트랜스폼 컴포넌트를 가져온다.
         RectTransform itemRectTransform = _originItem.GetComponent<RectTransform>();
 
-        //에러 메세지 표시
+        //RectTransform을 못가져오면 에러 표시
         Assert.IsNotNull(itemRectTransform, "itemRectTransform == null");
 
-        //렉트 정보를 가져옵니다.
-        Rect itemRect = itemRectTransform.rect;
+        //Rect 정보를 가져옵니다.
+        Rect itemViewRect = itemRectTransform.rect;
 
         //아이템 높이를 설정합니다.
-        _itemHeight = itemRect.height;
+        _itemHeight = itemViewRect.height;
     }
 
     private void InitContentHeight()
     {
+        //스크롤 뷰가 null이면 에러 표시
         Assert.IsNotNull(_scrollView, "_scrollView == null");
+
+        //스크롤 뷰 컨텐츠의 사이즈 X를 가져옵니다.
         float x = _scrollView.content.sizeDelta.x;
-        float y = _count * (_itemHeight + spacing) - spacing;
+
+        //스크롤 뷰 컨텐츠의 사이즈 Y를 계산합니다.
+        float y = _count * (_itemHeight + _spacing) - _spacing;
+
+        //스크롤 뷰 컨텐츠의 사이즈를 재 정의합니다.
         _scrollView.content.sizeDelta = new Vector2(x, y);
     }
 
     private void CreateItem(UnityAction<T, int> renderView)
     {
-        Assert.IsNotNull(_originItem,"_originItem == null");
+        //_originItem이 isNotNull이 아니면 에러를 발생합니다.
+        Assert.IsNotNull(_originItem, "_originItem == null");
 
         //height가 만약 1000이고 itemHeight : 150 + spacing : 30에 위 아래 보조 3개  
-        int itemCount = (int)(_scrollView.viewport.rect.height / (_itemHeight + spacing)) + 3;
+        int itemCount = (int)(_scrollView.viewport.rect.height / (_itemHeight + _spacing)) + 3;
+
+        //ItemList를 초기화합니다.
         _itemList = new List<T>();
+
         //필요한 개수에 맞춰서 생성
         for (int i = 0; i < itemCount; i++)
         {
@@ -68,7 +81,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
             T view = item.GetComponent<T>();
 
             //간격
-            float y = -i * (_itemHeight + spacing);
+            float y = -i * (_itemHeight + _spacing);
 
             //간격 적용
             item.transform.localPosition = new Vector3(0, y, 0);
@@ -79,7 +92,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    private bool RefreshPositionItem(Transform item, float contentPosY,float contentPosUpY, float contentPosBottomY)
+    private bool RefreshPositionItem(Transform item, float contentPosY, float contentPosUpY, float contentPosBottomY)
     {
         //아이템 앵커포인트 기반 Y포지션을 계산한다.
         float itemPosY = item.localPosition.y + contentPosY;
@@ -89,26 +102,24 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
         //아이템이 컨텐츠 영역 하단으로 넘어갔을 때,
         bool isDownLine = itemPosY < contentPosBottomY;
-        
+
         if (isUpLine)
         {
             Vector3 itemPos = item.localPosition;
-            itemPos.y -= _itemList.Count * (_itemHeight + spacing); //아이템 개수 * 아이템 높이 + 마진
+            itemPos.y -= _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
 
-            RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
-
+            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY);
             return true;
         }
 
         if (isDownLine)
         {
             Vector3 itemPos = item.localPosition;
-            itemPos.y += _itemList.Count * (_itemHeight + spacing); //아이템 개수 * 아이템 높이 + 마진
+            itemPos.y += _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
             item.localPosition = itemPos;
 
-            RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
-
+            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY);
             return true;
         }
 
@@ -117,37 +128,43 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Update()
     {
-        Assert.IsNotNull(_scrollView,"Init이 처리되지 않았습니다.");
-        
+        Assert.IsNotNull(_scrollView, "Init이 처리되지 않았습니다.");
+
         //스크롤 했을 때 컨텐츠 오브젝트 Y를 반환합니다.
         float contentPosY = _scrollView.content.anchoredPosition.y;
 
         //이 값을 넘어가면 스크롤 뷰 rectMaxY를 넘어간 것이다.
-        float itemHeightSpacing = _itemHeight + spacing;
+        float itemHeightSpacing = _itemHeight + _spacing;
 
         //컨텐츠 Rect상단에 아이템 2개 정도 높이
         float contentPosUpY = itemHeightSpacing * 2;
 
         //컨텐츠 Rect하단에 아이템 1개 정도 밑 높이
         float contentPosBottomY = -(_scrollView.viewport.rect.height + itemHeightSpacing);
-        
-        foreach (T item in _itemList)
-        {
-            bool isChange = RefreshPositionItem(item.transform,contentPosY,contentPosUpY,contentPosBottomY);
 
+        foreach (T itemView in _itemList)
+        {
+            //아이템 뷰들의 위치를 갱신합니다. (보이는 영역 밖으로 나가면 true, 아닐 시 false)
+            bool isChange = RefreshPositionItem(itemView.transform, contentPosY, contentPosUpY, contentPosBottomY);
+
+            //보이는 영역 밖으로 나갔다면,
             if (isChange)
             {
-                int index = (int)(-item.transform.localPosition.y / (_itemHeight + spacing));
+                //영역 밖으로 나가면 아이템 뷰에 표시되야하는 데이터의 인덱스를 재계산합니다.
+                int index = (int)(-itemView.transform.localPosition.y / itemHeightSpacing);
 
-                //데이터 표시 영역 밖이면 안보이게 한다.
+                //아이템 뷰가 인덱스 영역 밖이면 안보이게 한다.
                 if (index < 0 || index >= _count)
                 {
-                    item.gameObject.SetActive(false);
+                    itemView.gameObject.SetActive(false);
                     return;
                 }
 
-                item.gameObject.SetActive(true);
-                _renderView.Invoke(item, index);
+                //아이템 뷰를 무조건 활성화 해준다.
+                itemView.gameObject.SetActive(true);
+
+                //재정의된 인덱스를 가지고 아이템 뷰를 다시 렌더링한다.
+                _renderView.Invoke(itemView, index);
             }
         }
     }
