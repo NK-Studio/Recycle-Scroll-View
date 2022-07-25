@@ -15,6 +15,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/92/a3f96c0f/TransformAccess.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/e2/2ab70b88/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CustomScrollView/CustomItemView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CustomScrollView/CustomRecycleView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NormalScrollView/NormalScrollView.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -88,7 +89,8 @@
       <workItem from="1658217019786" duration="6585000" />
       <workItem from="1658239797322" duration="5964000" />
       <workItem from="1658479212023" duration="7426000" />
-      <workItem from="1658565804666" duration="8953000" />
+      <workItem from="1658565804666" duration="13634000" />
+      <workItem from="1658782733380" duration="2715000" />
     </task>
     <servers />
   </component>

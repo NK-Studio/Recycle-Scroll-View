@@ -24,7 +24,7 @@ public class NHNItemView : InfiniteScrollItem
 
         NHNItem item = (NHNItem)scrollData;
         nameText.text = item.Name;
-        levelText.text = $"Lv. {item.Level}";
+        levelText.text = $"Lv. {item.Level - 1}";
     }
 
     public void OnClick()

@@ -92,7 +92,8 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    private bool RefreshPositionItem(Transform item, float contentPosY, float contentPosUpY, float contentPosBottomY)
+    private bool RefreshPositionItem(Transform item, float contentPosY, float contentPosUpY, float contentPosBottomY,
+        float itemHeightSpacing)
     {
         //아이템 앵커포인트 기반 Y포지션을 계산한다.
         float itemPosY = item.localPosition.y + contentPosY;
@@ -103,23 +104,25 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         //아이템이 컨텐츠 영역 하단으로 넘어갔을 때,
         bool isDownLine = itemPosY < contentPosBottomY;
 
+        //contentPosUpY보다 더 위로 이동하여 밑으로 이동 시킵니다.
         if (isUpLine)
         {
-            Vector3 itemPos = item.localPosition;
-            itemPos.y -= _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
-            item.localPosition = itemPos;
+            Vector3 itemPosition = item.localPosition;
+            itemPosition.y -= _itemList.Count * itemHeightSpacing;
+            item.localPosition = itemPosition;
 
-            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY);
+            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY, itemHeightSpacing);
             return true;
         }
 
+        //contentPosBottomY보다 더 아래로 이동하여 위로 이동 시킵니다.
         if (isDownLine)
         {
-            Vector3 itemPos = item.localPosition;
-            itemPos.y += _itemList.Count * (_itemHeight + _spacing); //아이템 개수 * 아이템 높이 + 마진
-            item.localPosition = itemPos;
+            Vector3 itemPosition = item.localPosition;
+            itemPosition.y += _itemList.Count * itemHeightSpacing;
+            item.localPosition = itemPosition;
 
-            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY);
+            RefreshPositionItem(item.transform, contentPosY, contentPosUpY, contentPosBottomY, itemHeightSpacing);
             return true;
         }
 
@@ -145,7 +148,8 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         foreach (T itemView in _itemList)
         {
             //아이템 뷰들의 위치를 갱신합니다. (보이는 영역 밖으로 나가면 true, 아닐 시 false)
-            bool isChange = RefreshPositionItem(itemView.transform, contentPosY, contentPosUpY, contentPosBottomY);
+            bool isChange = RefreshPositionItem(itemView.transform, contentPosY, contentPosUpY, contentPosBottomY,
+                itemHeightSpacing);
 
             //보이는 영역 밖으로 나갔다면,
             if (isChange)
@@ -169,7 +173,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    public void Init(int count, T itemPrefab, UnityAction<T, int> renderView)
+    public void Init(int count, T itemPrefab, UnityAction<T, int> renderView, int spacing)
 
     {
         _scrollView = GetComponent<ScrollRect>();
@@ -177,6 +181,7 @@ public class RecycleScrollView<T> : MonoBehaviour where T : MonoBehaviour
         _count = count;
         _originItem = itemPrefab.gameObject;
         _renderView = renderView;
+        _spacing = spacing;
 
         InitItemHeightSize();
 
